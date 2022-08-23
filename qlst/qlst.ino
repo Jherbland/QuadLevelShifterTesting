@@ -14,7 +14,7 @@ void loop() {
     }
   }
   Serial.println("All tests completed.");
-  delay(90000L);
+  delay(5000L);
 }
 
 void do_test(int inp, int test_value) {
@@ -59,7 +59,7 @@ void do_test(int inp, int test_value) {
   }
 
   set_pin_modes(digital_assert_pin, digital_sense_pin);
-  delay(100);
+  delay(1);
   digitalWrite(digital_assert_pin, test_value);
   delay(1);
   digital_sense_value = digitalRead(digital_sense_pin);
@@ -73,10 +73,19 @@ void do_test(int inp, int test_value) {
   Serial.print(" P3="); Serial.print(analog_sense_pin);
   Serial.print(" TV="); Serial.print(test_value);
   Serial.print(" DO="); Serial.print(digital_sense_value);
-  Serial.print(" AO="); Serial.println(analog_sense_value);
+  Serial.print(" AO="); Serial.print(analog_sense_value);
+  if (test_value != digital_sense_value) {
+    Serial.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+  }
+  Serial.println();
+  delay(1000);
+//  while (Serial.available()<=1) {
+//    delay(5);
+//  }
+//  Serial.read();
 }
 
 void set_pin_modes(int digital_output_pin, int digital_input_pin) {
   pinMode(digital_output_pin, OUTPUT);
-  pinMode(digital_input_pin, INPUT);
+  pinMode(digital_input_pin, INPUT_PULLUP);
 }
